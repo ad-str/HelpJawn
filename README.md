@@ -2,7 +2,7 @@
 Platform to connect volunteers, organizations, and individuals in-need to foster a community with visible impact.
 
 # Installation
-To install Python packages:
+To install Python (version >= 3.8) packages:
 ```
 cd backend
 python3 -m venv .venv
@@ -11,7 +11,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-To install node modules:
+To install node (version >= 22) modules:
 ```
 cd frontend
 npm i
