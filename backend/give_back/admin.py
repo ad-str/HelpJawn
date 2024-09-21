@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Service, User, Volunteer, Organization, Client, Event, Post
+from .models import Service, User, Volunteer, Organization, Client, Event
 
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')  # Display these fields in the list view
+    list_display = ('name',)  # Display these fields in the list view
     search_fields = ('name',)  # Add a search bar for service names
     list_filter = ('name',)  # Allow filtering by service name
 
@@ -42,11 +42,3 @@ class EventAdmin(admin.ModelAdmin):
     search_fields = ('name', 'organization__name', 'status')  
     list_filter = ('date', 'status')  
     filter_horizontal = ('volunteers',) 
-
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'event', 'created_at')  
-    search_fields = ('title', 'event__name') 
-    list_filter = ('created_at',)  
-
-
