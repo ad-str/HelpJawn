@@ -37,8 +37,8 @@ class User(AbstractUser):
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bio = models.TextField()
-    location = models.TextField()
+    bio = models.TextField(default='')
+    location = models.TextField(default='')
     service_preferences = models.ManyToManyField(Service, blank=True)
 
     def __str__(self):
@@ -46,12 +46,12 @@ class Volunteer(models.Model):
     
 class Organization(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    website = models.URLField()
-    phone = models.CharField(max_length=20)
-    email = models.EmailField()
-    address = models.TextField()
+    name = models.CharField(max_length=100, default='')
+    description = models.TextField(default='')
+    website = models.URLField(default='')
+    phone = models.CharField(max_length=20, default='')
+    email = models.EmailField(default='')
+    address = models.TextField(default='')
     services = models.ManyToManyField(Service, blank=True)
 
     def __str__(self):
