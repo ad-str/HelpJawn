@@ -5,11 +5,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .forms import UserForm, VolunteerForm
-from .models import Service, User, Volunteer, Organization, Client, Event, Post
-from .serializers import ServiceSerializer, UserSerializer, VolunteerSerializer, OrganizationSerializer, ClientSerializer, EventSerializer, PostSerializer
+from .models import *
+from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
 
-
+# /api/services/
 class ServiceList(APIView):
     def get(self, request):
         services = Service.objects.all()
@@ -82,6 +82,7 @@ class VolunteerList(APIView):
         # Return errors if the data is invalid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# /api/organizations/
 class OrganizationList(APIView):
     def get(self, request):
         organizations = Organization.objects.all()
@@ -106,6 +107,7 @@ class OrganizationList(APIView):
         # Return errors if the data is invalid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# /api/clients/
 class ClientList(APIView):
     def get(self, request):
         clients = Client.objects.all()
@@ -130,6 +132,7 @@ class ClientList(APIView):
         # Return errors if the data is invalid
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# /api/events/
 class EventList(APIView):
     def get(self, request):
         events = Event.objects.all()

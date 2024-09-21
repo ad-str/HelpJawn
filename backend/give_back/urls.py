@@ -7,4 +7,5 @@ urlpatterns = [
     path('organizations/', OrganizationList.as_view(), name='organization-list'),
     path('clients/', ClientList.as_view(), name='client-list'),
     path('update-profile/', update_volunteer_profile, name='update_profile')
+    path('events/', EventList.as_view(), name='event-list'),
 ]
