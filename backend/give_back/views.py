@@ -1,9 +1,13 @@
-from django.shortcuts import get_object_or_404
+import json
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from .forms import UserForm, VolunteerForm
 from .models import *
 from .serializers import *
+from django.views.decorators.csrf import csrf_exempt
 
 # /api/services/
 class ServiceList(APIView):
@@ -141,3 +145,48 @@ class EventList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class PostList(APIView):
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@csrf_exempt  # If you are not handling CSRF tokens, you can exempt this
+def update_volunteer_profile(request):
+    if request.method == 'PATCH':
+        try:
+            data = json.loads(request.body)  # Load JSON data from the request
+
+            # You can remove the authentication check here
+            user_id = data.get('user_id')  # Get user ID from the request (you can handle how you fetch this)
+            user = User.objects.get(id=user_id)
+
+            # Now we update the user and volunteer details based on the data
+            user_form = UserForm(data, instance=user)
+            volunteer = Volunteer.objects.get(user=user)
+            volunteer_form = VolunteerForm(data, instance=volunteer)
+
+            if user_form.is_valid() and volunteer_form.is_valid():
+                user_form.save()  # Save user information
+                volunteer_form.save()  # Save volunteer information
+                return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+            else:
+                return JsonResponse({'errors': user_form.errors + volunteer_form.errors}, status=400)
+
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+
+        except Volunteer.DoesNotExist:
+            return JsonResponse({'error': 'Volunteer profile not found'}, status=404)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
