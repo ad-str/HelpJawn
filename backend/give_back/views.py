@@ -8,6 +8,8 @@ from .forms import UserForm, VolunteerForm
 from .models import *
 from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate , logout, get_user_model
+from rest_framework.decorators import api_view
 
 # /api/services/
 class ServiceList(APIView):
@@ -190,3 +192,39 @@ def update_volunteer_profile(request):
             return JsonResponse({'error': 'Volunteer profile not found'}, status=404)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@api_view(['POST'])
+def login_user(request):
+    data = request.data  # Get data from the request body
+    username = data.get('username')
+    password = data.get('password')
+
+    # Authenticate the user
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        user_data = UserSerializer(user).data 
+
+        # returns the user object without the password field
+        if 'password' in user_data:
+            del user_data['password']
+
+        return Response({
+            'message': 'Login successful',
+            'user': user_data  
+        }, status=200)
+    else:
+
+        
+        User = get_user_model()
+
+        try:
+            User.objects.get(username=username)
+            return Response({'error': 'Password incorrect'}, status=400)
+        except User.DoesNotExist:
+            return Response({'error': 'Username and password combination not found'}, status=400)
+
+@api_view(['POST'])
+def logout_user(request):
+    logout(request)
+    return Response({'message': 'User logged out successfully'}, status=200)
