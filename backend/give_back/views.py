@@ -160,25 +160,25 @@ class PostList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
-@csrf_exempt  # If you are not handling CSRF tokens, you can exempt this
+# /api/update-profile/
+@csrf_exempt  
 def update_volunteer_profile(request):
     if request.method == 'PATCH':
         try:
-            data = json.loads(request.body)  # Load JSON data from the request
+            data = json.loads(request.body) 
 
             # You can remove the authentication check here
-            user_id = data.get('user_id')  # Get user ID from the request (you can handle how you fetch this)
+            user_id = data.get('user_id') 
             user = User.objects.get(id=user_id)
 
-            # Now we update the user and volunteer details based on the data
+            
             user_form = UserForm(data, instance=user)
             volunteer = Volunteer.objects.get(user=user)
             volunteer_form = VolunteerForm(data, instance=volunteer)
 
             if user_form.is_valid() and volunteer_form.is_valid():
-                user_form.save()  # Save user information
-                volunteer_form.save()  # Save volunteer information
+                user_form.save() 
+                volunteer_form.save()  
                 return JsonResponse({'message': 'Profile updated successfully'}, status=200)
             else:
                 return JsonResponse({'errors': user_form.errors + volunteer_form.errors}, status=400)
