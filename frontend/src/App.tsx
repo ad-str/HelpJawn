@@ -29,7 +29,7 @@ function App() {
       <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} />
       <main className="content">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home accountType={"organizer"}/>} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
