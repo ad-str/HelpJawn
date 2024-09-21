@@ -3,10 +3,16 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { MouseEvent, useState } from 'react';
 
+interface FormData {
+    username: string;
+    email: string;
+    password: string;
+    accountType: string;
+}
 
 export const SignUpModal: React.FC = () => {
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         username: '',
         email: '',
         password: '',
