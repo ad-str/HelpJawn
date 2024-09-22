@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import { MouseEvent, useState } from 'react';
 import {User} from '../App';
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface SignUpModalProps {
     setUser: (user: User) => void;

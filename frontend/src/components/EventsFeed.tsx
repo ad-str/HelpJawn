@@ -5,7 +5,7 @@ import { EventCard } from './EventCard';
 import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { VolunteerSignUpModal } from './VolunteerSignUpModal';
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface Event {
     id: number;
