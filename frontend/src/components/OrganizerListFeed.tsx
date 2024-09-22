@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 interface Event {
     title: string;
     description: string;
     date: string;
     location: string;
-    imageLink: string;
+    startTime: string;
+    endTime: string;
+    serviceType: string;
 }
 
 export const OrganizerListFeed: React.FC = () => {
@@ -19,40 +23,24 @@ export const OrganizerListFeed: React.FC = () => {
     const show = () => setModal(true);
     const hide = () => setModal(false);
 
-    // const [events, setEvents] = useState<Event[]>([]);
-
-    const [mockEvents, setMockEvents] = useState<Event[]>([
-        {
-            title: "Event 1",
-            description: "This is the first event",
-            date: "2021-10-10",
-            location: "Location 1",
-            imageLink: "https://via.placeholder.com/150"
-        },
-        {
-            title: "Event 2",
-            description: "This is the second event",
-            date: "2021-10-11",
-            location: "Location 2",
-            imageLink: "https://via.placeholder.com/150"
-        },
-        {
-            title: "Event 3",
-            description: "This is the third event",
-            date: "2021-10-12",
-            location: "Location 3",
-            imageLink: "https://via.placeholder.com/150"
-        },
-        {
-            title: "Event 4",
-            description: "This is the fourth event",
-            date: "2021-10-13",
-            location: "Location 4",
-            imageLink: "https://via.placeholder.com/150"
-        }
-    ]);
+    const [events, setEvents] = useState<Event[]>([]);
+    const [serviceTypes, setServiceTypes] = useState<string[]>([]);
 
     // INSERT USE EFFECT TO PULL EVENTS FROM BACKEND
+    useEffect(() => {
+        try {
+            fetch(`${API_URL}/services/`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('Failed to fetch')
+            })
+            .then(data => setServiceTypes(data))
+        } catch (error) {
+            console.error('Failed to fetch')
+        }
+    }) 
 
     return (
         <div>
@@ -64,20 +52,25 @@ export const OrganizerListFeed: React.FC = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>Name</th>
                         <th>Description</th>
                         <th>Date</th>
                         <th>Location</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Service Type</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {mockEvents.map((event, index) => (
+                    {events.map((event, index) => (
                         <tr key={index}>
                             <td>{event.title}</td>
                             <td>{event.description}</td>
                             <td>{event.date}</td>
                             <td>{event.location}</td>
+                            <td>{event.startTime}</td>
+                            <td>{event.endTime}</td>
                             <td><a className="hover"><i className="bi bi-x"></i></a></td>
                         </tr>
                     ))}
@@ -102,13 +95,26 @@ export const OrganizerListFeed: React.FC = () => {
                             <Form.Label>Date</Form.Label>
                             <Form.Control type="date" placeholder="Enter date" />
                         </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Start Time</Form.Label>
+                            <Form.Control type="time" placeholder="Enter time" />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>End Time</Form.Label>
+                            <Form.Control type="time" placeholder="Enter time" />
+                        </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicLocation">
                             <Form.Label>Location</Form.Label>
                             <Form.Control type="text" placeholder="Enter location" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicImageLink">
-                            <Form.Label>Image</Form.Label>
-                            <Form.Control type="file" placeholder="Enter image link" />
+                        <Form.Group className="mb-3" controlId="formServiceType">
+                            <Form.Label>Service Type</Form.Label>
+                            <Form.Select aria-label="Default select example">
+                                <option>Select Service Type</option>
+                               {serviceTypes.map((serviceType, index) => (
+                                   <option key={index + 1}>{serviceType}</option>
+                                 ))}
+                            </Form.Select>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

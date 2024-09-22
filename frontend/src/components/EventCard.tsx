@@ -6,13 +6,12 @@ interface EventCardProps {
     description: string;
     date: string;
     location: string;
-    imageLink: string;
 };
 
-export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location, imageLink }) => {
+export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location }) => {
   return (
     <Card className='mx-auto'>
-      <Card.Img className='mx-auto' variant="top" style={{maxWidth: '66%'}} src={imageLink} />
+      <Card.Img className='mx-auto' variant="top" style={{maxWidth: '66%'}} src={"https://via.placeholder.com/150"} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>
