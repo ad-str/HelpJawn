@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import './GiveThanksModal.css';
 
 interface GiveThanksModalProps {
     handleGiveThanks: (message: string) => Promise<void>;
@@ -26,7 +27,7 @@ export const GiveThanksModal: React.FC<GiveThanksModalProps> = ({handleGiveThank
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => handleGiveThanks(message)}>Send</Button>
+                <Button className='button-custom' onClick={() => handleGiveThanks(message)}>Send</Button>
             </Modal.Footer>
         </Modal.Header>
     )
