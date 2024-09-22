@@ -20,20 +20,20 @@ export const EventCard: React.FC<EventCardProps> = ({ title, description, date, 
     <Card className='event-card mx-auto h-100'>  {/* 'h-100' ensures the card takes full height */}
       <Card.Img variant="top" className='event-card-img' src={image} alt={title} />
       <Card.Body className='d-flex flex-column'>  {/* Flexbox for column alignment */}
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>
-          {description}
-        </Card.Text>
-        <Card.Text>
-          {date}
-        </Card.Text>
-        <Card.Text>
-            {location}
-        </Card.Text>
-        <Button onClick={() => {
-            show();
-            setSelectedEvent(id);
-        }} className='button-custom'>{user_type === "volunteer" ? "Sign Up" : "Thank"}</Button>
+          <Card.Title>{title}</Card.Title>
+          <Card.Text className='truncate'>{description}</Card.Text>
+          {/* <Card.Text className='event-timing'>
+              <strong>When:</strong> {new Date(startDate).toLocaleString()} - {new Date(endDate).toLocaleString()}
+          </Card.Text> */}
+          <Card.Text>
+              <strong>Location:</strong> {location}
+          </Card.Text>
+          <Button onClick={() => {
+              show();
+              setSelectedEvent(id);
+          }} className='button-custom'>
+              {user_type === "volunteer" ? "Sign Up" : "+Impact"}
+          </Button>
       </Card.Body>
     </Card>
   );
