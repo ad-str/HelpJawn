@@ -2,21 +2,28 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { MouseEvent, useState } from 'react';
+import {User} from '../App';
+
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+interface SignUpModalProps {
+    setUser: (user: User) => void;
+}
 
 interface FormData {
     username: string;
     email: string;
     password: string;
-    accountType: string;
+    user_type: string;
 }
 
-export const SignUpModal: React.FC = () => {
+export const SignUpModal: React.FC<SignUpModalProps> = ({setUser}) => {
 
     const [formData, setFormData] = useState<FormData>({
         username: '',
         email: '',
         password: '',
-        accountType: '',
+        user_type: '',
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,21 +36,37 @@ export const SignUpModal: React.FC = () => {
       };
 
     const handleAccountTypeChange = (e: MouseEvent<HTMLElement>) => {
+        console.log(e.target);
         const { id } = e.target as HTMLInputElement;
+        const user_type = id === 'inline-radio-1' ? 'client' : id === 'inline-radio-2' ? 'volunteer' : 'organization';
         setFormData((prevData) => ({
           ...prevData,
-          accountType: id,
+          user_type,
         }));
     }
 
-    const handleSignUpSubmit = (): void => { 
+    const handleSignUpSubmit = async () => {
         console.log(formData);
-        setFormData({
-            username: '',
-            email: '',
-            password: '',
-            accountType: '',
-        });
+        try {
+            const response = await fetch(`${API_URL}/users/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            if (response.ok) {
+                console.log("Response is okay");
+                const data: User = await response.json();
+                console.log(data);
+                setUser(data);
+            } else {
+                console.error('Sign Up failed');
+                throw new Error('Sign Up failed');
+            }
+        } catch (error) {
+            console.error('Sign Up failed');
+        }
     }
 
     return (
@@ -73,7 +96,7 @@ export const SignUpModal: React.FC = () => {
                         <div key={`inline-radio`} className="mb-3">
                             <Form.Check
                                 inline
-                                label="Beneficiary"
+                                label="Client"
                                 name="accountType"
                                 type="radio"
                                 id="inline-radio-1"
@@ -85,6 +108,7 @@ export const SignUpModal: React.FC = () => {
                                 name="accountType"
                                 type="radio"
                                 id="inline-radio-2"
+                                onClick={handleAccountTypeChange}
                             />
                             <Form.Check
                                 inline
@@ -92,6 +116,7 @@ export const SignUpModal: React.FC = () => {
                                 name="accountType"
                                 type="radio"
                                 id="inline-radio-3"
+                                onClick={handleAccountTypeChange}
                             />
                         </div>
                     </Form.Group>
