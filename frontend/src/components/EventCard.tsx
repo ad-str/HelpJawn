@@ -9,12 +9,13 @@ interface EventCardProps {
     location: string;
     user_type: string;
     image: string;
-};
-
-export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location, user_type, show, id, setSelectedEvent, image }) => {
     show: () => void;
     setSelectedEvent: (id: number) => void;
     id: number
+};
+
+export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location, user_type, show, id, setSelectedEvent, image }) => {
+    
   return (
     <Card className='event-card mx-auto h-100'>  {/* 'h-100' ensures the card takes full height */}
       <Card.Img variant="top" className='event-card-img' src={image} alt={title} />
