@@ -1,20 +1,15 @@
-import { Button, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { OrganizerListFeed } from "../components/OrganizerListFeed";
+import { EventsFeed } from "../components/EventsFeed";
 
-export function Home() {
+interface HomeProps {
+    accountType: string | undefined;
+}
 
+export const Home: React.FC<HomeProps> = ({ accountType }) => {
     return (
-        <div className="d-flex justify-content-center">
-            <Row className="align-items-center">
-                <Col xs={10}>
-                    <input type="text" className="form-control" placeholder="Search for a charity" />
-                </Col>
-                <Col xs={2}>
-                    <Button variant="primary">
-                        Search
-                    </Button>
-                </Col>
-            </Row>
-        </div>
+        <>
+            {accountType === "organizer" ? <OrganizerListFeed /> : <EventsFeed />}
+        </>
     )
 }

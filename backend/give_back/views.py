@@ -1,11 +1,16 @@
 import json
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from .forms import UserForm, VolunteerForm
 from .models import *
 from .serializers import *
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate , logout, get_user_model
+from rest_framework.decorators import api_view
 
 # /api/services/
 class ServiceList(APIView):
@@ -27,6 +32,12 @@ class UserList(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
         serializer.save() # save a new user
+
+        user = serializer.save()
+        password = request.data.get('password')
+        if password:
+            user.set_password(password)
+            user.save()
 
         # also save them to respective user type table
         user_type = request.data['user_type']
@@ -158,3 +169,71 @@ def event_signup(request):
     volunteer = get_object_or_404(Volunteer, pk=volunteer_id)
     event.volunteers.add(volunteer)
     return Response(status=status.HTTP_200_OK)
+
+# /api/update-profile/
+@csrf_exempt  
+def update_volunteer_profile(request):
+    if request.method == 'PATCH':
+        try:
+            data = json.loads(request.body) 
+
+            # You can remove the authentication check here
+            user_id = data.get('user_id') 
+            user = User.objects.get(id=user_id)
+
+            
+            user_form = UserForm(data, instance=user)
+            volunteer = Volunteer.objects.get(user=user)
+            volunteer_form = VolunteerForm(data, instance=volunteer)
+
+            if user_form.is_valid() and volunteer_form.is_valid():
+                user_form.save() 
+                volunteer_form.save()  
+                return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+            else:
+                return JsonResponse({'errors': user_form.errors + volunteer_form.errors}, status=400)
+
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+
+        except Volunteer.DoesNotExist:
+            return JsonResponse({'error': 'Volunteer profile not found'}, status=404)
+
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@api_view(['POST'])
+def login_user(request):
+    data = request.data  # Get data from the request body
+    username = data.get('username')
+    password = data.get('password')
+
+    # Authenticate the user
+    user = authenticate(username=username, password=password)
+
+    if user is not None:
+        user_data = UserSerializer(user).data 
+
+        # returns the user object without the password field
+        if 'password' in user_data:
+            del user_data['password']
+
+        return Response({
+            'message': 'Login successful',
+            'user': user_data  
+        }, status=200)
+    else:
+
+        
+        User = get_user_model()
+        print(password)
+
+        try:
+            User.objects.get(username=username)
+            return Response({'error': 'Password incorrect'}, status=400)
+        except User.DoesNotExist:
+            return Response({'error': 'Username and password combination not found'}, status=400)
+
+@api_view(['POST'])
+def logout_user(request):
+    logout(request)
+    return Response({'message': 'User logged out successfully'}, status=200)
