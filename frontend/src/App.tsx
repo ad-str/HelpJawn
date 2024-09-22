@@ -19,12 +19,7 @@ const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 function App() {
 
-  const [user, setUser] = useState<User | null>({
-    id: 1,
-    user_type: "volunteer",
-    username: "test",
-    email: "email@test.com"
-  });
+  const [user, setUser] = useState<User | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false);
   const showLogin = () => setShowModal(true);
@@ -71,7 +66,7 @@ function App() {
       <main className="content">
         <Routes>
           <Route path="/" element={<Home accountType={user?.user_type} userId={user !== null ? user.id : 0}/>} />
-          {user && <Route path="/settings" element={<Settings type={user.user_type} user={user}/>} />}
+          {user && <Route path="/settings" element={<Settings user_type={user.user_type} user={user}/>} />}
         </Routes>
       </main>
       
