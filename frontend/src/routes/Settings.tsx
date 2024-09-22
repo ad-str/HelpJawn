@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "../App";
 import { Form, Button } from "react-bootstrap";
+
+const API_URL = import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
 
 interface SettingsProps {
     user: User;
     user_type: string; // Keep this as is
-    updateProfile?: (profileData: { username: string; firstName: string; lastName: string; location?: string; bio?: string }) => void;
+}
+
+interface VolunteerFormData {
+    location: string;
+    bio: string;
+}
+
+interface OrganizationFormData {
+    orgName: string;
+    city: string
+    address: string;
+    phone: string;
+    orgEmail: string;
 }
 
 export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfile }) => {
@@ -14,6 +28,9 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfi
     const [lastName, setLastName] = useState("");
     const [location, setLocation] = useState("");
     const [bio, setBio] = useState("");
+
+    const [volunteerFormData, setVolunteerFormData] = useState<VolunteerFormData>();
+    const [organizationFormData, setOrganizationFormData] = useState<OrganizationFormData>();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setUsername(e.target.value);
@@ -50,6 +67,28 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfi
             console.log("Profile update options are only available for volunteers.");
         }
     };
+
+    useEffect(() => {
+        if (user_type === "volunteer") {
+            fetch(`${API_URL}/volunteers/${user.id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setVolunteerFormData(data);
+                    setFirstName(data.first_name);
+                    setLastName(data.last_name);
+                    setLocation(data.location);
+                    setBio(data.bio);
+                })
+                .catch((error) => console.log(error));
+        } else if (user_type === "organization") {
+            fetch(`${API_URL}/organizations/${user.id}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setOrganizationFormData(data);
+                })
+                .catch((error) => console.log(error));
+        }   
+    }, []);
 
     return (
         <div>

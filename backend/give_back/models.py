@@ -84,3 +84,11 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
+class ImpactNote(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    note = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.event.name} - {self.client.user.username}'

@@ -48,3 +48,8 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
+
+class ImpactNoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImpactNote
+        fields = '__all__'
