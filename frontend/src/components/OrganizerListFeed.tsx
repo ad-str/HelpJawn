@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface Event {
     name: string;
@@ -14,7 +14,7 @@ interface Event {
     location: string;
     start_time: string;
     end_time: string;
-    serviceType: string;
+    service: number;
 }
 
 interface EventForm {
@@ -142,7 +142,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
                             <td>{event.location}</td>
                             <td>{event.start_time}</td>
                             <td>{event.end_time}</td>
-                            <td>{event.serviceType}</td>
+                            <td>{serviceTypes[event.service]}</td>
                         </tr>
                     ))}
                 </tbody>

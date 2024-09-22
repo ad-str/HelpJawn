@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User } from "../App";
 import { Form, Button } from "react-bootstrap";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface SettingsProps {
     user: User;
