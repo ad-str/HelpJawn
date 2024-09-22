@@ -330,3 +330,10 @@ def volunteer_impact(request, user_id):
     
     serializer = ImpactNoteSerializer(impact_notes, many=True)
     return Response(serializer.data)
+
+# /api/event/:event_id
+@api_view(['GET'])
+def get_event(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    serializer = EventSerializer(event)
+    return Response(serializer.data)
