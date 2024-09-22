@@ -15,6 +15,8 @@ export interface User {
   email: string;
 }
 
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 function App() {
 
   const [user, setUser] = useState<User | null>({
@@ -35,6 +37,28 @@ function App() {
     setUser(null);
   }
 
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      const response = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+        hideLogin();
+      } else {
+        console.error('Login failed');
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      console.error('Login failed');
+    }
+  }
+
   return (
     <div>
       <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
@@ -47,7 +71,7 @@ function App() {
       
 
       <Modal show={showModal} onHide={hideLogin}>
-        <LogInModal />
+        <LogInModal handleLogIn={handleLogin}/>
       </Modal>
 
       <Modal show={showSignUpModal} onHide={hideSignUp}>
