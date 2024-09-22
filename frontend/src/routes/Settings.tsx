@@ -260,7 +260,7 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type }) => {
                     </>
                 }
 
-                <Button variant="primary" type="submit" style={{ marginTop: '20px' }}>
+                <Button variant="Success" type="submit" style={{ marginTop: '20px' }}>
                     Save Changes
                 </Button>
             </Form>
