@@ -22,17 +22,23 @@ class Command(BaseCommand):
 
         # Create test data for Volunteers
         for i in range(5):
-            user = User.objects.create(username=f'volunteer{i}', password='password', user_type='volunteer', first_name=self.VOLUNTEER_NAMES[i])
+            user = User.objects.create(username=f'volunteer{i}', user_type='volunteer', first_name=self.VOLUNTEER_NAMES[i])
+            user.set_password('password')
+            user.save()
             Volunteer.objects.create(user=user, bio=f'Volunteer {i} bio', location=self.LOCATIONS[i])
 
         # Create test data for Organizations
         for i in range(5):
             user = User.objects.create(username=f'organization{i}', password='password', user_type='organization')
+            user.set_password('password')
+            user.save()
             Organization.objects.create(user=user, name=self.ORG_NAMES[i], city=self.LOCATIONS[i])
 
         # Create test data for Clients
         for i in range(5):
             user = User.objects.create(username=f'client{i}', password='password', user_type='client')
+            user.set_password('password')
+            user.save()
             Client.objects.create(user=user)
         
         # Create test data for Events
