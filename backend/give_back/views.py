@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 from rest_framework import status
 from .forms import UserForm, VolunteerForm
 from .models import *
@@ -154,19 +155,20 @@ class EventList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class PostList(APIView):
-    def get(self, request):
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
+# api/event-signup/
+@api_view(['POST'])
+def event_signup(request):
+    if request.method != 'POST':
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     
-    def post(self, request):
-        serializer = PostSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    data = json.loads(request.body)  # Load the JSON data
+    event_id = data.get('event_id')
+    volunteer_id = data.get('volunteer_id')
+    
+    event = get_object_or_404(Event, pk=event_id)
+    volunteer = get_object_or_404(Volunteer, pk=volunteer_id)
+    event.volunteers.add(volunteer)
+    return Response(status=status.HTTP_200_OK)
 
 # /api/update-profile/
 @csrf_exempt  

@@ -40,44 +40,45 @@ class User(AbstractUser):
 
 class Volunteer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    bio = models.TextField(default='')
-    location = models.TextField(default='')
+    bio = models.TextField(blank=True, null=True)
+    location = models.TextField(blank=True, null=True)
     service_preferences = models.ManyToManyField(Service, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username
     
 class Organization(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    name = models.CharField(max_length=100, default='')
-    description = models.TextField(default='')
-    website = models.URLField(default='')
-    phone = models.CharField(max_length=20, default='')
-    email = models.EmailField(default='')
-    address = models.TextField(default='')
+    name = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    website = models.URLField(blank=True, null=True)
+    phone = models.CharField(max_length=20, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
     services = models.ManyToManyField(Service, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     # note sure what else we would need for a client yet
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class Event(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     date = models.DateField()
-    time = models.TimeField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
     location = models.TextField()
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    volunteers = models.ManyToManyField(Volunteer, blank=True)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=(('open', 'Open'), ('completed', 'Completed')), default='open')
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, blank=True, null=True)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    volunteers = models.ManyToManyField(Volunteer, blank=True)
 
     def __str__(self):
         return self.name
