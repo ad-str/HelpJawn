@@ -9,10 +9,20 @@
 .nav-link {
     transition: color 0.3s ease;
     font-weight: 500;
+    position: relative;
+    display: inline-block; /* Ensures the link behaves as an inline element */
+    padding: 0 10px; /* Optional: Add horizontal padding for spacing */
 }
 
-.nav-link:hover {
-    color: #ff4747;  
+.nav-link.active::after {
+    content: '';
+    display: block; /* Make the underline fit the text width */
+    height: 4px; /* Thickness of the underline */
+    background: black; /* Customize the color */
+    width: 100%; /* Matches the width of the text */
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Adjust vertical position */
 }
 
 .btn-login {

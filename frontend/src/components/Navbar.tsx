@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './NavbarComponent.css'; 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface NavbarProps {
     showLogin: () => void;
@@ -27,9 +27,23 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <Link className="nav-link" to="/">Home</Link>
-                            {(loggedIn && user_type === "volunteer") && <Link className="nav-link" to="/impact">Impact</Link>}
-                            {loggedIn && <Link className="nav-link" to="/settings">Account</Link>}
+                            <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
+                            {(loggedIn && user_type === "volunteer") && (
+                                <NavLink
+                                    to="/impact"
+                                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                >
+                                    Impact
+                                </NavLink>
+                            )}
+                            {loggedIn && (
+                                <NavLink
+                                    to="/settings"
+                                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                                >
+                                    Account
+                                </NavLink>
+                            )}
                         </Nav>
                         <Nav>
                             {loggedIn ? 
