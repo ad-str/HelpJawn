@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .forms import UserForm, VolunteerForm
+from .forms import *
 from .models import *
 from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
@@ -172,33 +172,85 @@ def event_signup(request):
     return Response(status=status.HTTP_200_OK)
 
 # /api/update-profile/
-@csrf_exempt  
-def update_volunteer_profile(request):
-    if request.method == 'PATCH':
+@csrf_exempt   
+def update_profile(request, user_id):  # Renamed to update_profile
+    if request.method == 'GET':
         try:
-            data = json.loads(request.body) 
-
-            # You can remove the authentication check here
-            user_id = data.get('user_id') 
+            # Retrieve user based on user_id passed in URL
             user = User.objects.get(id=user_id)
 
-            
-            user_form = UserForm(data, instance=user)
-            volunteer = Volunteer.objects.get(user=user)
-            volunteer_form = VolunteerForm(data, instance=volunteer)
+            # Prepare the response based on user type
+            response_data = {
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'user_type': user.user_type,
+            }
 
-            if user_form.is_valid() and volunteer_form.is_valid():
-                user_form.save() 
-                volunteer_form.save()  
-                return JsonResponse({'message': 'Profile updated successfully'}, status=200)
-            else:
-                return JsonResponse({'errors': user_form.errors + volunteer_form.errors}, status=400)
+            if user.user_type == 'volunteer':
+                volunteer = Volunteer.objects.get(user=user)
+                response_data['location'] = volunteer.location
+                response_data['bio'] = volunteer.bio
+            elif user.user_type == 'organization':
+                organization = Organization.objects.get(user=user)
+                response_data.update({
+                    'name': organization.name,
+                    'city': organization.city,
+                    'address': organization.address,
+                    'phone': organization.phone,
+                })
+
+            return JsonResponse(response_data, status=200)
 
         except User.DoesNotExist:
             return JsonResponse({'error': 'User not found'}, status=404)
 
         except Volunteer.DoesNotExist:
             return JsonResponse({'error': 'Volunteer profile not found'}, status=404)
+
+        except Organization.DoesNotExist:
+            return JsonResponse({'error': 'Organization profile not found'}, status=404)
+
+    if request.method == 'PATCH':
+        try:
+            data = json.loads(request.body)
+            user = User.objects.get(id=user_id)
+
+            # Initialize form for user data
+            user_form = UserForm(data, instance=user)
+
+            if user.user_type == 'volunteer':
+                volunteer = Volunteer.objects.get(user=user)
+                volunteer_form = VolunteerForm(data, instance=volunteer)
+
+                # Validate both forms
+                if user_form.is_valid() and volunteer_form.is_valid():
+                    user_form.save()
+                    volunteer_form.save()
+                    return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+                else:
+                    # Return form errors
+                    errors = user_form.errors.as_json()
+                    errors += volunteer_form.errors.as_json()
+                    return JsonResponse({'errors': errors}, status=400)
+
+            elif user.user_type == 'organization':
+                organization = Organization.objects.get(user=user)
+                organization_form = OrganizationForm(data, instance=organization)
+
+                # Validate both forms
+                if user_form.is_valid() and organization_form.is_valid():
+                    user_form.save()
+                    organization_form.save()
+                    return JsonResponse({'message': 'Profile updated successfully'}, status=200)
+                else:
+                    # Return form errors
+                    errors = user_form.errors.as_json()
+                    errors += organization_form.errors.as_json()
+                    return JsonResponse({'errors': errors}, status=400)
+
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
