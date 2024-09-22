@@ -14,7 +14,7 @@ interface Event {
     location: string;
     start_time: string;
     end_time: string;
-    serviceType: string;
+    service: number;
 }
 
 interface EventForm {
@@ -142,7 +142,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
                             <td>{event.location}</td>
                             <td>{event.start_time}</td>
                             <td>{event.end_time}</td>
-                            <td>{event.serviceType}</td>
+                            <td>{serviceTypes[event.service]}</td>
                         </tr>
                     ))}
                 </tbody>
