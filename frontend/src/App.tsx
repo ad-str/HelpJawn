@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import { SignUpModal } from './components/SignUpModal'
 import { LogInModal } from './components/LogInModal'
+import { Impact } from './routes/Impact'
 
 export interface User {
   id: number;
@@ -62,11 +63,12 @@ function App() {
 
   return (
     <div>
-      <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
+      <NavbarComponent user_type={user?.user_type} showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
       <main className="content">
         <Routes>
           <Route path="/" element={<Home accountType={user?.user_type} userId={user !== null ? user.id : 0}/>} />
           {user && <Route path="/settings" element={<Settings user_type={user.user_type} user={user}/>} />}
+          {(user && user.user_type === "volunteer") && <Route path="/impact" element={<Impact user_id={user.id} />} />}
         </Routes>
       </main>
       

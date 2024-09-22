@@ -10,9 +10,10 @@ interface NavbarProps {
     showSignUp: () => void;
     loggedIn: boolean;
     handleSignOut: () => void;
+    user_type: string | undefined;
 }
 
-const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedIn, handleSignOut }) => {
+const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedIn, handleSignOut, user_type }) => {
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
@@ -27,6 +28,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
                         >
                             <Link className="nav-link" to="/">Home</Link>
                             {loggedIn && <Link className="nav-link" to="/settings">Settings</Link>}
+                            {(loggedIn && user_type === "volunteer") && <Link className="nav-link" to="/impact">Impact</Link>}
                         </Nav>
                         <Nav>
                             {loggedIn ? 
