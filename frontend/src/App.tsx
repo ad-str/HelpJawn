@@ -70,8 +70,8 @@ function App() {
       <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
       <main className="content">
         <Routes>
-          <Route path="/" element={<Home accountType={user?.user_type}/>} />
-          {user && <Route path="/settings" element={<Settings user_type={user.user_type} user={user}/>} />}
+          <Route path="/" element={<Home accountType={user?.user_type} userId={user !== null ? user.id : 0}/>} />
+          {user && <Route path="/settings" element={<Settings type={user.user_type} user={user}/>} />}
         </Routes>
       </main>
       

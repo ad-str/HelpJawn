@@ -16,8 +16,9 @@ from rest_framework.decorators import api_view
 class ServiceList(APIView):
     def get(self, request):
         services = Service.objects.all()
-        serializer = ServiceSerializer(services, many=True)
-        return Response(serializer.data)
+        #serializer = ServiceSerializer(services, many=True)
+        service_names = [service.name for service in services]
+        return Response(service_names)
 
 # /api/users/
 class UserList(APIView):
