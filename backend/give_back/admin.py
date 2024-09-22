@@ -38,7 +38,7 @@ class ClientAdmin(admin.ModelAdmin):
 # 6. Registering the Event model
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'organization', 'date', 'time', 'status') 
+    list_display = ('name', 'organization', 'date', 'start_time', 'end_time', 'status') 
     search_fields = ('name', 'organization__name', 'status')  
     list_filter = ('date', 'status')  
     filter_horizontal = ('volunteers',) 

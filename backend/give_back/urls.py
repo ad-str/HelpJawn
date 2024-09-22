@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserList, VolunteerList, OrganizationList, ClientList, EventList
+from .views import *
 
 urlpatterns = [
     path('users/', UserList.as_view(), name='user-list'),
@@ -7,4 +7,5 @@ urlpatterns = [
     path('organizations/', OrganizationList.as_view(), name='organization-list'),
     path('clients/', ClientList.as_view(), name='client-list'),
     path('events/', EventList.as_view(), name='event-list'),
+    path('event-signup/', event_signup, name='event-signup'),
 ]
