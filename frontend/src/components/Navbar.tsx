@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import "bootstrap/dist/css/bootstrap.min.css";
+import './NavbarComponent.css'; 
 import { Link } from 'react-router-dom';
 
 interface NavbarProps {
@@ -34,8 +35,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
                             {loggedIn ? 
                             <Button variant="primary" onClick={handleSignOut}>Log Out</Button> : 
                             <>
-                                <Button variant="primary" onClick={showLogin}>Login</Button>
-                                <Button variant="" onClick={showSignUp}>Sign Up</Button>
+                                <Button className = "btn-login"  onClick={showLogin}>Login</Button>
+                                <Button variant ="" onClick={showSignUp}>Sign Up</Button>
                             </>}
                         </Nav>
                     </Navbar.Collapse>

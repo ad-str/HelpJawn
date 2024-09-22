@@ -1,0 +1,30 @@
+/* NavbarComponent.css */
+.navbar {
+    background: linear-gradient(90deg, #ffd25f, #50f16e); 
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  
+    transition: all 0.3s ease;  
+}
+
+.nav-link {
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #ff4747;  
+}
+
+.btn-login {
+    background-color: #023c0f;  /* Custom green background color */
+    color: white;               /* Text color */
+    border: none;               /* Remove border */
+    padding: 8px 20px;          /* Padding to make it look better */
+    border-radius: 30px;        /* Rounded corners */
+    transition: background-color 0.3s ease;  /* Smooth transition on hover */
+}
+
+.btn-login:hover {
+    background-color: #218838;  /* Darker green on hover */
+    color: white;
+}

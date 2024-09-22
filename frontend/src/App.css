@@ -1,9 +1,12 @@
 #root {
+  font-family: 'Poppins', sans-serif;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: white;
 }
+
 
 main.content {
   padding-top: 48px;
@@ -44,3 +47,14 @@ main.content {
 .read-the-docs {
   color: #888;
 }
+
+body {
+  background-image: url('/images/image7.jpg'); 
+  background-size: cover;           
+  background-repeat: no-repeat;    
+  background-position: center;  
+  height: 100vh;                   
+  background-attachment: fixed;   
+ 
+}
+
