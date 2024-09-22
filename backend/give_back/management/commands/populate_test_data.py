@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from give_back.models import Service, User, Volunteer, Organization, Client, Event
+from give_back.models import *
 
 class Command(BaseCommand):
     help = 'Populates the database with test data'
@@ -81,5 +81,12 @@ class Command(BaseCommand):
             end_time='16:00:00',
             service=Service.objects.get(name='Education')
         )
+
+        # make some impact notes
+        for i in range(5):
+            event = Event.objects.get(name=f'Event {i + 1}')
+            for j in range(3):
+                client = Client.objects.get(user__username=f'client{j}')
+                ImpactNote.objects.create(event=event, client=client, note=f'Impact note for Event {i + 1} by client {j}')
 
         self.stdout.write(self.style.SUCCESS('Successfully populated the database with test data'))
