@@ -1,7 +1,7 @@
 # forms.py
 from django import forms
 from django.contrib.auth.models import User
-from .models import Volunteer
+from .models import*
 
 class UserForm(forms.ModelForm):
     """
@@ -9,7 +9,7 @@ class UserForm(forms.ModelForm):
     """
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']  # Fields from User model
+        fields = ['first_name', 'last_name', 'email']  
 
 
 class VolunteerForm(forms.ModelForm):
@@ -18,4 +18,9 @@ class VolunteerForm(forms.ModelForm):
     """
     class Meta:
         model = Volunteer
-        fields = ['bio', 'location']  # Fields from Volunteer model
+        fields = ['bio', 'location']  
+
+class OrganizationForm(forms.ModelForm):
+    class Meta:
+        model = Organization
+        fields = ['name', 'city', 'address', 'phone', 'email']

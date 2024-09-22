@@ -7,6 +7,7 @@ urlpatterns = [
     path('volunteers/', VolunteerList.as_view(), name='volunteer-list'),
     path('organizations/', OrganizationList.as_view(), name='organization-list'),
     path('clients/', ClientList.as_view(), name='client-list'),
+    path('api/update_profile/<int:user_id>/', update_profile, name='update_profile'),
     path('events/', EventList.as_view(), name='event-list'),
     path('impact-notes/', ImpactNoteList.as_view(), name='impact-note-list'),
     path('login/', login_user, name='login_user'), 
