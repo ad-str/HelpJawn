@@ -32,6 +32,12 @@ class UserList(APIView):
         
         serializer.save() # save a new user
 
+        user = serializer.save()
+        password = request.data.get('password')
+        if password:
+            user.set_password(password)
+            user.save()
+
         # also save them to respective user type table
         user_type = request.data['user_type']
         if user_type == 'volunteer':
@@ -217,6 +223,7 @@ def login_user(request):
 
         
         User = get_user_model()
+        print(password)
 
         try:
             User.objects.get(username=username)
