@@ -118,7 +118,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div></div> {/* Empty div to push the button to the right */}
-                <Button onClick={show}>Add</Button>
+                <Button variant="Success" onClick={show}>Add</Button>
             </div>
 
             <Table striped bordered hover>
@@ -190,7 +190,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={addEvent} variant="primary">Add</Button>
+                    <Button onClick={addEvent} variant="Success">Add</Button>
                 </Modal.Footer>
             </Modal>
         </div>

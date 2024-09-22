@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './EventCard.css';  // Import a CSS file for custom styling
-import './GiveThanksModal.css';
 
 interface EventCardProps {
     title: string;

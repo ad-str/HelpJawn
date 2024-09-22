@@ -48,7 +48,7 @@ export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={() => handleLogIn(formData.username, formData.password)}>Log In</Button>
+                <Button variant="success" onClick={() => handleLogIn(formData.username, formData.password)}>Log In</Button>
             </Modal.Footer>
         </>
     )
