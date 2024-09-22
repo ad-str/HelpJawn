@@ -9,7 +9,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ accountType }) => {
     return (
         <>
-            {accountType === "organizer" ? <OrganizerListFeed /> : <EventsFeed />}
+            {accountType === "organization" ? <OrganizerListFeed /> : <EventsFeed />}
         </>
     )
 }
