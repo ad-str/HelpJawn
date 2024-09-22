@@ -117,8 +117,8 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
     return (
         <div>
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <div></div> {/* Empty div to push the button to the right */}
-                <Button variant="Success" onClick={show}>Add</Button>
+                <div><h1>Upcoming Events:</h1></div> {/* Empty div to push the button to the right */}
+                <Button variant="success" onClick={show}>Add</Button>
             </div>
 
             <Table striped bordered hover>

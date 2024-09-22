@@ -17,12 +17,12 @@ export const GiveThanksModal: React.FC<GiveThanksModalProps> = ({handleGiveThank
 
     return (
         <Modal.Header closeButton>
-            <Modal.Title>Give Thanks</Modal.Title>
+            {/* <Modal.Title></Modal.Title> */}
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="message">
-                        <Form.Label>Message</Form.Label>
-                        <Form.Control as="textarea" value={message} onChange={handleMessageChange} placeholder="Thank you for your help!" />
+                        <Form.Label>Message:</Form.Label>
+                        <Form.Control as="textarea" value={message} onChange={handleMessageChange} placeholder="Send a message about how this event impacted you!" />
                     </Form.Group>
                 </Form>
             </Modal.Body>

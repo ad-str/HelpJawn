@@ -35,7 +35,7 @@ export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <Form.Label>Username</Form.Label>
                         <Form.Control name="username" value={formData.username} onChange={handleInputChange} type="username" placeholder="Enter username" />
                         <Form.Text className="text-muted">
                             We'll never share your username with anyone else.
