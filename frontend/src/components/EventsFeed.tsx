@@ -13,6 +13,8 @@ interface Event {
     name: string;
     description: string;
     date: string;
+    start_time: string;
+    end_time: string;
     location: string;
     image: string;  // Add this field for the image path
 }
@@ -101,7 +103,7 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
                 <Row className="justify-content-start">
                     {events.map((event, index) => (
                         <Col key={index} xs={12} sm={12} md={6} lg={4} className="mb-4">
-                            <EventCard title={event.name} description={event.description} date={event.date} location={event.location} user_type={user_type} show={show} setSelectedEvent={setEvent} id={event.id} image={event.image} />
+                            <EventCard title={event.name} description={event.description} date={event.date} start_time={event.start_time} end_time={event.end_time} location={event.location} user_type={user_type} show={show} setSelectedEvent={setEvent} id={event.id} image={event.image}/>
                         </Col>
                     ))}
                 </Row>

@@ -1,13 +1,24 @@
 .event-card {
-    min-height: 100%;    
-    max-height: 500px;   
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .event-card-img {
-    object-fit: cover;   
-    height: 200px;       
-    width: 100%;        
-  }
+  min-height: 100%;    
+  max-height: 500px;   
+  display: flex;
+  flex-direction: column;
+}
+
+.event-card-img {
+  object-fit: cover;   
+  height: 200px;
+  width: 100%;
+  max-height: 150px;
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  line-clamp: 3; /* Standard property for compatibility */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
   
