@@ -10,5 +10,6 @@ urlpatterns = [
     path('events/', EventList.as_view(), name='event-list'),
     path('event-signup/', event_signup, name='event-signup'),
     path('login/', login_user, name='login_user'), 
-    path('logout/', logout_user, name='logout_user'),  
+    path('logout/', logout_user, name='logout_user'),
+    path('services/', ServiceList.as_view(), name='service-list'),
 ]
