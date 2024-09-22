@@ -10,7 +10,7 @@ import { LogInModal } from './components/LogInModal'
 
 export interface User {
   id: number;
-  type: string;
+  user_type: string;
   username: string;
   email: string;
 }
@@ -21,7 +21,7 @@ function App() {
 
   const [user, setUser] = useState<User | null>({
     id: 1,
-    type: "volunteer",
+    user_type: "volunteer",
     username: "test",
     email: "email@test.com"
   });
@@ -37,9 +37,14 @@ function App() {
     setUser(null);
   }
 
+  const handleSuccessfulSignup = (user: User) => {
+    setUser(user);
+    hideSignUp();
+  }
+
   const handleLogin = async (username: string, password: string) => {
     try {
-      const response = await fetch(`${API_URL}/login`, {
+      const response = await fetch(`${API_URL}/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -47,6 +52,7 @@ function App() {
         body: JSON.stringify({ username, password })
       });
       if (response.ok) {
+        console.log("Response is okay");
         const data = await response.json();
         setUser(data.user);
         hideLogin();
@@ -64,8 +70,8 @@ function App() {
       <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
       <main className="content">
         <Routes>
-          <Route path="/" element={<Home accountType={user?.type}/>} />
-          {user && <Route path="/settings" element={<Settings type={user.type} user={user}/>} />}
+          <Route path="/" element={<Home accountType={user?.user_type}/>} />
+          {user && <Route path="/settings" element={<Settings type={user.user_type} user={user}/>} />}
         </Routes>
       </main>
       
@@ -75,7 +81,7 @@ function App() {
       </Modal>
 
       <Modal show={showSignUpModal} onHide={hideSignUp}>
-        <SignUpModal />
+        <SignUpModal setUser={handleSuccessfulSignup} />
       </Modal>
     </div>
   )
