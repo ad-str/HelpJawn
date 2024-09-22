@@ -150,6 +150,10 @@ class EventList(APIView):
         return Response(serializer.data)
     
     def post(self, request):
+        service_name = request.data.pop('service')
+        service = get_object_or_404(Service, name=service_name)
+        request.data['service'] = service.id
+
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
