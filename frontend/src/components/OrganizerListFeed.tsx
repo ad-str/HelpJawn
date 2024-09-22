@@ -17,14 +17,78 @@ interface Event {
     serviceType: string;
 }
 
-export const OrganizerListFeed: React.FC = () => {
+interface EventForm {
+    name: string;
+    description: string;
+    date: string;
+    location: string;
+    start_time: string;
+    end_time: string;
+    serviceType: string;
+    organization: number;
+}
+
+interface OrganizerListFeedProps {
+    organizationId: number;
+}
+
+export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizationId}) => {
 
     const [modal, setModal] = useState<boolean>(false);
     const show = () => setModal(true);
     const hide = () => setModal(false);
 
+
     const [events, setEvents] = useState<Event[]>([]);
+    const [eventForm, setEventForm] = useState<EventForm>({
+        name: '',
+        description: '',
+        date: '',
+        location: '',
+        start_time: '',
+        end_time: '',
+        serviceType: '',
+        organization: organizationId
+    });
     const [serviceTypes, setServiceTypes] = useState<string[]>([]);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { id, value } = e.target;
+        setEventForm((prevData) => ({
+            ...prevData,
+            [id]: value
+        }));
+    }
+    const handleDropDownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = e.target;
+        setEventForm((prevData) => ({
+            ...prevData,
+            serviceType: value
+        }));
+    }
+
+    const addEvent = async () => {
+        try {
+            const response = await fetch(`${API_URL}/events/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(eventForm)
+            });
+            if (response.ok) {
+                console.log("Response is okay");
+                const data = await response.json();
+                setEvents((prevEvents) => [...prevEvents, data]);
+                hide();
+            } else {
+                console.error('Failed to add event');
+                throw new Error('Failed to add event');
+            }
+        } catch (error) {
+            console.error('Failed to add event');
+        }
+    }
+
 
     // INSERT USE EFFECT TO PULL EVENTS FROM BACKEND
     useEffect(() => {
@@ -40,7 +104,7 @@ export const OrganizerListFeed: React.FC = () => {
         } catch (error) {
             console.error('Failed to fetch')
         }
-    }) 
+    }, []) 
 
     return (
         <div>
@@ -83,43 +147,43 @@ export const OrganizerListFeed: React.FC = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group className="mb-3" controlId="formBasicTitle">
+                        <Form.Group className="mb-3" controlId="name">
                             <Form.Label>Title</Form.Label>
-                            <Form.Control type="text" placeholder="Enter title" />
+                            <Form.Control value={eventForm.name} onChange={handleInputChange} type="text" placeholder="Enter title" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicDescription">
+                        <Form.Group className="mb-3" controlId="description">
                             <Form.Label>Description</Form.Label>
-                            <Form.Control type="text" placeholder="Enter description" />
+                            <Form.Control value={eventForm.description} onChange={handleInputChange} type="text" placeholder="Enter description" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicDate">
+                        <Form.Group className="mb-3" controlId="date">
                             <Form.Label>Date</Form.Label>
-                            <Form.Control type="date" placeholder="Enter date" />
+                            <Form.Control value={eventForm.date} onChange={handleInputChange} type="date" placeholder="Enter date" />
                         </Form.Group>
-                        <Form.Group>
+                        <Form.Group controlId="start_time">
                             <Form.Label>Start Time</Form.Label>
-                            <Form.Control type="time" placeholder="Enter time" />
+                            <Form.Control value={eventForm.start_time} onChange={handleInputChange} type="time" placeholder="Enter time" />
                         </Form.Group>
-                        <Form.Group>
+                        <Form.Group controlId="end_time">
                             <Form.Label>End Time</Form.Label>
-                            <Form.Control type="time" placeholder="Enter time" />
+                            <Form.Control value={eventForm.end_time} onChange={handleInputChange} type="time" placeholder="Enter time" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicLocation">
+                        <Form.Group className="mb-3" controlId="location">
                             <Form.Label>Location</Form.Label>
-                            <Form.Control type="text" placeholder="Enter location" />
+                            <Form.Control value={eventForm.location} onChange={handleInputChange} type="text" placeholder="Enter location" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formServiceType">
+                        <Form.Group className="mb-3" controlId="serviceType">
                             <Form.Label>Service Type</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select aria-label="Default select example" onChange={handleDropDownChange}>
                                 <option>Select Service Type</option>
-                               {serviceTypes.map((serviceType, index) => (
-                                   <option key={index + 1}>{serviceType}</option>
-                                 ))}
+                                {serviceTypes.map((serviceType, index) => (
+                                    <option key={index + 1}>{serviceType}</option>
+                                ))}
                             </Form.Select>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary">Add</Button>
+                    <Button onClick={addEvent} variant="primary">Add</Button>
                 </Modal.Footer>
             </Modal>
         </div>
