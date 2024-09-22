@@ -8,15 +8,19 @@ import { Modal } from 'react-bootstrap'
 import { SignUpModal } from './components/SignUpModal'
 import { LogInModal } from './components/LogInModal'
 
-/*interface User {
+export interface User {
   type: string;
   username: string;
   email: string;
-}*/
+}
 
 function App() {
 
-  // const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>({
+    type: "volunteer",
+    username: "test",
+    email: "email@test.com"
+  });
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showSignUpModal, setShowSignUpModal] = useState<boolean>(false);
   const showLogin = () => setShowModal(true);
@@ -24,13 +28,18 @@ function App() {
   const showSignUp = () => setShowSignUpModal(true);
   const hideSignUp = () => setShowSignUpModal(false);
 
+  //  Handles sign out of application
+  const handleSignOut = () => {
+    setUser(null);
+  }
+
   return (
     <div>
-      <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} />
+      <NavbarComponent showLogin={showLogin} showSignUp={showSignUp} loggedIn={user !== null ? true : false} handleSignOut={handleSignOut} />
       <main className="content">
         <Routes>
-          <Route path="/" element={<Home accountType={"organizer"}/>} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/" element={<Home accountType={user?.type}/>} />
+          {user && <Route path="/settings" element={<Settings type={user.type} user={user}/>} />}
         </Routes>
       </main>
       
