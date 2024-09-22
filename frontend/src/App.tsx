@@ -71,7 +71,7 @@ function App() {
       <main className="content">
         <Routes>
           <Route path="/" element={<Home accountType={user?.user_type}/>} />
-          {user && <Route path="/settings" element={<Settings type={user.user_type} user={user}/>} />}
+          {user && <Route path="/settings" element={<Settings user_type={user.user_type} user={user}/>} />}
         </Routes>
       </main>
       
