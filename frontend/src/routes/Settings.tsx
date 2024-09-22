@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { User } from "../App";
 import { Form, Button } from "react-bootstrap";
 
-const API_URL = import.meta.env.REACT_APP_API_BASE_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 interface SettingsProps {
     user: User;
@@ -22,7 +22,7 @@ interface OrganizationFormData {
     orgEmail: string;
 }
 
-export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfile }) => {
+export const Settings: React.FC<SettingsProps> = ({ user, user_type }) => {
     const [username, setUsername] = useState(user.username);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -55,14 +55,7 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfi
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (user_type === "volunteer" && updateProfile) {
-            updateProfile({
-                username,
-                firstName,
-                lastName,
-                location,
-                bio,
-            });
+        if (user_type === "volunteer") {
         } else {
             console.log("Profile update options are only available for volunteers.");
         }
@@ -70,7 +63,7 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfi
 
     useEffect(() => {
         if (user_type === "volunteer") {
-            fetch(`${API_URL}/volunteers/${user.id}`)
+            fetch(`${API_URL}/update-profile/`)
                 .then((response) => response.json())
                 .then((data) => {
                     setVolunteerFormData(data);
@@ -81,7 +74,7 @@ export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfi
                 })
                 .catch((error) => console.log(error));
         } else if (user_type === "organization") {
-            fetch(`${API_URL}/organizations/${user.id}`)
+            fetch(`${API_URL}/organizations/${user.id}/`)
                 .then((response) => response.json())
                 .then((data) => {
                     setOrganizationFormData(data);

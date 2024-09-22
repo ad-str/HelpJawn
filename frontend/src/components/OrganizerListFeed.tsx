@@ -8,12 +8,12 @@ import Form from "react-bootstrap/Form";
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 interface Event {
-    title: string;
+    name: string;
     description: string;
     date: string;
     location: string;
-    startTime: string;
-    endTime: string;
+    start_time: string;
+    end_time: string;
     serviceType: string;
 }
 
@@ -101,6 +101,14 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
                 throw new Error('Failed to fetch')
             })
             .then(data => setServiceTypes(data))
+            fetch(`${API_URL}/org-events/${organizationId}/`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw new Error('Failed to fetch')
+            })
+            .then(data => setEvents(data))
         } catch (error) {
             console.error('Failed to fetch')
         }
@@ -123,19 +131,18 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
                         <th>Start Time</th>
                         <th>End Time</th>
                         <th>Service Type</th>
-                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     {events.map((event, index) => (
                         <tr key={index}>
-                            <td>{event.title}</td>
+                            <td>{event.name}</td>
                             <td>{event.description}</td>
                             <td>{event.date}</td>
                             <td>{event.location}</td>
-                            <td>{event.startTime}</td>
-                            <td>{event.endTime}</td>
-                            <td><a className="hover"><i className="bi bi-x"></i></a></td>
+                            <td>{event.start_time}</td>
+                            <td>{event.end_time}</td>
+                            <td>{event.serviceType}</td>
                         </tr>
                     ))}
                 </tbody>
