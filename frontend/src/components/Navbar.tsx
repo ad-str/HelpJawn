@@ -28,8 +28,8 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
                             navbarScroll
                         >
                             <Link className="nav-link" to="/">Home</Link>
-                            {loggedIn && <Link className="nav-link" to="/settings">Settings</Link>}
                             {(loggedIn && user_type === "volunteer") && <Link className="nav-link" to="/impact">Impact</Link>}
+                            {loggedIn && <Link className="nav-link" to="/settings">Account</Link>}
                         </Nav>
                         <Nav>
                             {loggedIn ? 
