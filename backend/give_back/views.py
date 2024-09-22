@@ -238,3 +238,12 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return Response({'message': 'User logged out successfully'}, status=200)
+
+# /api/org-events/:user_id
+@api_view(['GET'])
+def org_events(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    organization = get_object_or_404(Organization, user=user)
+    events = organization.event_set.all()
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)
