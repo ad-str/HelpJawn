@@ -3,7 +3,7 @@ import { OrganizerListFeed } from "../components/OrganizerListFeed";
 import { EventsFeed } from "../components/EventsFeed";
 
 interface HomeProps {
-    accountType: string | null;
+    accountType: string | undefined;
 }
 
 export const Home: React.FC<HomeProps> = ({ accountType }) => {

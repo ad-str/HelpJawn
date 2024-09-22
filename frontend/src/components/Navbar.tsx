@@ -8,9 +8,11 @@ import { Link } from 'react-router-dom';
 interface NavbarProps {
     showLogin: () => void;
     showSignUp: () => void;
+    loggedIn: boolean;
+    handleSignOut: () => void;
 }
 
-const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp }) => {
+const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedIn, handleSignOut }) => {
     return (
         <>
             <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
@@ -24,11 +26,15 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp }) => {
                             navbarScroll
                         >
                             <Link className="nav-link" to="/">Home</Link>
-                            <Link className="nav-link" to="/settings">Settings</Link>
+                            {loggedIn && <Link className="nav-link" to="/settings">Settings</Link>}
                         </Nav>
                         <Nav>
-                            <Button variant="primary" onClick={showLogin}>Login</Button>
-                            <Button variant="" onClick={showSignUp}>Sign Up</Button>
+                            {loggedIn ? 
+                            <Button variant="primary" onClick={handleSignOut}>Log Out</Button> : 
+                            <>
+                                <Button variant="primary" onClick={showLogin}>Login</Button>
+                                <Button variant="" onClick={showSignUp}>Sign Up</Button>
+                            </>}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
