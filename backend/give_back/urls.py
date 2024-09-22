@@ -14,4 +14,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout_user'),
     path('event-signup/', event_signup, name='event-signup'),
     path('org-events/<int:user_id>/', org_events, name='org-events'),
+    path('volunteer-impact/<int:user_id>/', volunteer_impact, name='volunteer-impact'),
 ]
