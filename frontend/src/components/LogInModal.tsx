@@ -4,18 +4,18 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 
 interface FormData {
-    email: string;
+    username: string;
     password: string;
 }
 
 interface LogInModalProps {
-    handleLogIn: (email: string, password: string ) => Promise<void>;
+    handleLogIn: (username: string, password: string ) => Promise<void>;
 }
 
 export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
 
     const [formData, setFormData] = useState<FormData>({
-        email: '',
+        username: '',
         password: '',
     });
 
@@ -36,9 +36,9 @@ export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control name="email" value={formData.email} onChange={handleInputChange} type="email" placeholder="Enter email" />
+                        <Form.Control name="username" value={formData.username} onChange={handleInputChange} type="username" placeholder="Enter username" />
                         <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
+                            We'll never share your username with anyone else.
                         </Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -48,7 +48,7 @@ export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={() => handleLogIn(formData.email, formData.password)}>Log In</Button>
+                <Button variant="primary" onClick={() => handleLogIn(formData.username, formData.password)}>Log In</Button>
             </Modal.Footer>
         </>
     )

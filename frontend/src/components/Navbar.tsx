@@ -17,7 +17,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
         <>
             <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
                 <Container fluid>
-                    <Navbar.Brand href="#">Give Back</Navbar.Brand>
+                    <Navbar.Brand href="#">HelpJawn☘️</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
