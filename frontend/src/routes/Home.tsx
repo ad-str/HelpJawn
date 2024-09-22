@@ -10,7 +10,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ accountType, userId }) => {
     return (
         <>
-            {accountType === "organization" ? <OrganizerListFeed organizationId={userId === undefined ? 0 : userId} /> : <EventsFeed />}
+            {accountType === "organization" ? <OrganizerListFeed organizationId={userId === undefined ? 0 : userId} /> : <EventsFeed user_type={accountType!} />}
         </>
     )
 }
