@@ -58,3 +58,15 @@ body {
  
 }
 
+.modal-footer .button-custom {
+  background-color: #4CAF50 !important;  /* Custom green background */
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.modal-footer .button-custom:hover {
+  background-color: #45a049 !important;  /* Darker green on hover */
+}

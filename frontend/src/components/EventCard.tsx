@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './EventCard.css';  // Import a CSS file for custom styling
-import './GiveThanksModal.css';
 
 interface EventCardProps {
     title: string;
@@ -33,7 +32,7 @@ export const EventCard: React.FC<EventCardProps> = ({ title, description, date, 
         <Button onClick={() => {
             show();
             setSelectedEvent(id);
-        }} className='button-custom'>{user_type === "volunteer" ? "Sign Up" : "Thank"}</Button>
+        }} variant="Success">{user_type === "volunteer" ? "Sign Up" : "Thank"}</Button>
       </Card.Body>
     </Card>
   );
