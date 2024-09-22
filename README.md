@@ -16,3 +16,18 @@ To install node (version >= 22) modules:
 cd frontend
 npm i
 ```
+
+# Commands
+Server migrations:
+```
+cd backend
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+Flush all data and populate database:
+```
+cd backend
+python3 manage.py flush
+python3 manage.py populate_test_data
+```
