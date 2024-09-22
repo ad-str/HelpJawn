@@ -24,7 +24,7 @@ interface EventForm {
     location: string;
     start_time: string;
     end_time: string;
-    serviceType: string;
+    service: string;
     organization: number;
 }
 
@@ -47,7 +47,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
         location: '',
         start_time: '',
         end_time: '',
-        serviceType: '',
+        service: '',
         organization: organizationId
     });
     const [serviceTypes, setServiceTypes] = useState<string[]>([]);
@@ -62,7 +62,7 @@ export const OrganizerListFeed: React.FC<OrganizerListFeedProps> = ({organizatio
         const { value } = e.target;
         setEventForm((prevData) => ({
             ...prevData,
-            serviceType: value
+            service: value
         }));
     }
 

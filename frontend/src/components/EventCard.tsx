@@ -6,9 +6,10 @@ interface EventCardProps {
     description: string;
     date: string;
     location: string;
+    user_type: string;
 };
 
-export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location }) => {
+export const EventCard: React.FC<EventCardProps> = ({ title, description, date, location, user_type }) => {
   return (
     <Card className='mx-auto'>
       <Card.Img className='mx-auto' variant="top" style={{maxWidth: '66%'}} src={"https://via.placeholder.com/150"} />
@@ -23,7 +24,7 @@ export const EventCard: React.FC<EventCardProps> = ({ title, description, date, 
         <Card.Text>
             {location}
         </Card.Text>
-        <Button variant="primary">Sign Up</Button>
+        <Button variant="primary">{user_type === "volunteer" ? "Sign Up" : "Thank"}</Button>
       </Card.Body>
     </Card>
   );

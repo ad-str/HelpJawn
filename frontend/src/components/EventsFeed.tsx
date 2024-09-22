@@ -12,7 +12,11 @@ interface Event {
     location: string;
 }
 
-export const EventsFeed: React.FC = () => {
+interface EventsFeedProps {
+    user_type: string;
+}
+
+export const EventsFeed: React.FC<EventsFeedProps> = ({user_type}) => {
 
     const [events, setEvents] = useState<Event[]>([]);
 
@@ -29,7 +33,7 @@ export const EventsFeed: React.FC = () => {
                 <Row className="justify-content-start">
                     {events.map((event, index) => (
                         <Col key={index} xs={12} sm={12} md={6} lg={4} className="mb-4">
-                            <EventCard title={event.name} description={event.description} date={event.date} location={event.location} />
+                            <EventCard title={event.name} description={event.description} date={event.date} location={event.location} user_type={user_type} />
                         </Col>
                     ))}
                 </Row>
