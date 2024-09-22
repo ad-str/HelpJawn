@@ -5,6 +5,7 @@ import { EventCard } from './EventCard';
 import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { VolunteerSignUpModal } from './VolunteerSignUpModal';
+import { GiveThanksModal } from './GiveThanksModal';
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface Event {
@@ -70,8 +71,28 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
         }
     }
 
-    const handleSayThanks = async () => {
-
+    const handleSayThanks = async (message: string) => {
+        try {
+            fetch(`${API_URL}/impact-notes/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({note: message ,event: selectedEvent, client: userId})
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Response is okay");
+                    hide();
+                } else {
+                    throw new Error('Failed to say thanks');
+                }
+            })
+            .then(data => console.log(data))
+            hide();
+        } catch (error) {
+            console.error('Failed to say thanks');
+        }
     }
 
     return (
@@ -87,6 +108,7 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
             </Container>
             <Modal show={showModal} onHide={hide}>
                     {user_type === "volunteer" && <VolunteerSignUpModal handleVolunteerSignUp={handleSignUpVolunteer} />}
+                    {user_type === "client" && <GiveThanksModal handleGiveThanks={handleSayThanks} />}
             </Modal>
         </div>
     );
