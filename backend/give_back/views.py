@@ -162,6 +162,13 @@ class ImpactNoteList(APIView):
         impact_notes = ImpactNote.objects.all()
         serializer = ImpactNoteSerializer(impact_notes, many=True)
         return Response(serializer.data)
+    
+    def post(self, request):
+        serializer = ImpactNoteSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # api/event-signup/
 @api_view(['POST'])
