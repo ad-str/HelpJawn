@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { EventCard } from './EventCard';
 import { useState, useEffect } from 'react';
-const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
 
 interface Event {
     name: string;
