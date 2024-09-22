@@ -337,3 +337,12 @@ def get_event(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
     serializer = EventSerializer(event)
     return Response(serializer.data)
+
+# /api/registered-events/:user_id
+@api_view(['GET'])
+def registered_events(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    volunteer = get_object_or_404(Volunteer, user=user)
+    events = volunteer.event_set.all()
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)
