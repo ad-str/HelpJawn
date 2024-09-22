@@ -12,4 +12,5 @@ urlpatterns = [
     path('login/', login_user, name='login_user'), 
     path('logout/', logout_user, name='logout_user'),
     path('services/', ServiceList.as_view(), name='service-list'),
+    path('org-events/<int:user_id>/', org_events, name='org-events'),
 ]
