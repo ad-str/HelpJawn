@@ -9,6 +9,7 @@ import { SignUpModal } from './components/SignUpModal'
 import { LogInModal } from './components/LogInModal'
 
 export interface User {
+  id: number;
   type: string;
   username: string;
   email: string;
@@ -17,6 +18,7 @@ export interface User {
 function App() {
 
   const [user, setUser] = useState<User | null>({
+    id: 1,
     type: "volunteer",
     username: "test",
     email: "email@test.com"
