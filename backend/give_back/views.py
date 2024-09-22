@@ -32,8 +32,6 @@ class UserList(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer.save() # save a new user
-
         user = serializer.save()
         password = request.data.get('password')
         if password:
@@ -279,34 +277,30 @@ def login_user(request):
     data = request.data  # Get data from the request body
     username = data.get('username')
     password = data.get('password')
-    user = User.objects.get(username=username)
-    print(user)
 
-    # # Authenticate the user
-    # user = authenticate(username=username, password=password)
+    # Authenticate the user
+    user = authenticate(username=username, password=password)
 
-    # if user is not None:
-    #     user_data = UserSerializer(user).data 
+    if user is not None:
+        user_data = UserSerializer(user).data 
 
-    #     # returns the user object without the password field
-    #     if 'password' in user_data:
-    #         del user_data['password']
+        # returns the user object without the password field
+        if 'password' in user_data:
+            del user_data['password']
 
-    #     return Response({
-    #         'message': 'Login successful',
-    #         'user': user_data  
-    #     }, status=200)
-    # else:
+        return Response({
+            'message': 'Login successful',
+            'user': user_data  
+        }, status=200)
+    else:
+        User = get_user_model()
+        print(password)
 
-        
-    #     User = get_user_model()
-    #     print(password)
-
-    #     try:
-    #         User.objects.get(username=username)
-    #         return Response({'error': 'Password incorrect'}, status=400)
-    #     except User.DoesNotExist:
-    #         return Response({'error': 'Username and password combination not found'}, status=400)
+        try:
+            User.objects.get(username=username)
+            return Response({'error': 'Password incorrect'}, status=400)
+        except User.DoesNotExist:
+            return Response({'error': 'Username and password combination not found'}, status=400)
 
 @api_view(['POST'])
 def logout_user(request):
