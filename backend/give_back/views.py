@@ -156,6 +156,13 @@ class EventList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# /api/impact-notes/
+class ImpactNoteList(APIView):
+    def get(self, request):
+        impact_notes = ImpactNote.objects.all()
+        serializer = ImpactNoteSerializer(impact_notes, many=True)
+        return Response(serializer.data)
+
 # api/event-signup/
 @api_view(['POST'])
 def event_signup(request):
