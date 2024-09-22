@@ -8,7 +8,11 @@ interface FormData {
     password: string;
 }
 
-export const LogInModal = () => {
+interface LogInModalProps {
+    handleLogIn: (email: string, password: string ) => Promise<void>;
+}
+
+export const LogInModal: React.FC<LogInModalProps> = ({handleLogIn}) => {
 
     const [formData, setFormData] = useState<FormData>({
         email: '',
@@ -22,14 +26,6 @@ export const LogInModal = () => {
             [name]: value,
         }));
     }
-
-    const handleLogInSubmit = (): void => {
-        console.log(formData);
-        setFormData({
-            email: '',
-            password: '',
-        });
-    };
 
     return (
         <>
@@ -52,7 +48,7 @@ export const LogInModal = () => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleLogInSubmit}>Log In</Button>
+                <Button variant="primary" onClick={() => handleLogIn(formData.email, formData.password)}>Log In</Button>
             </Modal.Footer>
         </>
     )
