@@ -10,6 +10,7 @@ interface Event {
     description: string;
     date: string;
     location: string;
+    image: string;  // Add this field for the image path
 }
 
 interface EventsFeedProps {
@@ -23,7 +24,14 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type}) => {
     useEffect(() => {
         fetch(`${API_URL}/events/`)
             .then(response => response.json())
-            .then(data => setEvents(data))
+            .then(data => {
+                // Assuming each event has a unique index or identifier
+                const eventsWithImages = data.map((event: Event, index: number) => ({
+                    ...event,
+                    image: `/images/event${index + 1}.jpg`  // Assign a local image path
+                }));
+                setEvents(eventsWithImages);
+            })
             .catch(error => console.log(error));
     }, []);
 
@@ -31,13 +39,20 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type}) => {
         <div className="d-flex">
             <Container>
                 <Row className="justify-content-start">
-                    {events.map((event, index) => (
-                        <Col key={index} xs={12} sm={12} md={6} lg={4} className="mb-4">
-                            <EventCard title={event.name} description={event.description} date={event.date} location={event.location} user_type={user_type} />
-                        </Col>
-                    ))}
+                {events.map((event, index) => (
+    <Col key={index} xs={12} sm={12} md={6} lg={4} className="mb-4">
+        <EventCard 
+          title={event.name} 
+          description={event.description} 
+          date={event.date} 
+          location={event.location} 
+          user_type={user_type} 
+          image={event.image}  // Pass the image here
+        />
+    </Col>
+))}
                 </Row>
             </Container>
         </div>
-    )
+    );
 }
