@@ -255,3 +255,18 @@ def org_events(request, user_id):
     events = organization.event_set.all()
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
+
+# /api/volunteer-impact/:user_id
+@api_view(['GET'])
+def volunteer_impact(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    volunteer = get_object_or_404(Volunteer, user=user)
+    
+    # Get all events attended by the volunteer
+    attended_events = Event.objects.filter(volunteers=volunteer)
+    
+    # Get all impact notes related to the attended events
+    impact_notes = ImpactNote.objects.filter(event__in=attended_events)
+    
+    serializer = ImpactNoteSerializer(impact_notes, many=True)
+    return Response(serializer.data)
