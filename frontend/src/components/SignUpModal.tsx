@@ -123,7 +123,7 @@ export const SignUpModal: React.FC<SignUpModalProps> = ({setUser}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={handleSignUpSubmit}>Sign Up</Button>
+                <Button variant="Success" onClick={handleSignUpSubmit}>Sign Up</Button>
             </Modal.Footer>
         </>
     )

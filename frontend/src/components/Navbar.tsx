@@ -33,7 +33,7 @@ const NavbarComponent: React.FC<NavbarProps> = ({ showLogin, showSignUp, loggedI
                         </Nav>
                         <Nav>
                             {loggedIn ? 
-                            <Button variant="primary" onClick={handleSignOut}>Log Out</Button> : 
+                            <Button variant="Success" onClick={handleSignOut}>Log Out</Button> : 
                             <>
                                 <Button className = "btn-login"  onClick={showLogin}>Login</Button>
                                 <Button variant ="" onClick={showSignUp}>Sign Up</Button>
