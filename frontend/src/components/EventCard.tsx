@@ -6,6 +6,7 @@ import './EventCard.css';  // Import a CSS file for custom styling
 
 interface EventCardProps {
     title: string;
+    isSignedUp: boolean;
     description: string;
     date: string;
     start_time: string;
@@ -19,7 +20,7 @@ interface EventCardProps {
 }
 
 export const EventCard: React.FC<EventCardProps> = ({
-    title, description, date, start_time, end_time, location, user_type, setSelectedEvent, id, image, show
+    title, isSignedUp, description, date, start_time, end_time, location, user_type, setSelectedEvent, id, image, show
 }) => {
     const [showModal, setShowModal] = useState(false);  // State to manage modal visibility
 
@@ -57,8 +58,8 @@ export const EventCard: React.FC<EventCardProps> = ({
                         <Button onClick={() => {
                             show();  // Call the show function passed from the parent component
                             setSelectedEvent(id);
-                        }} className='button-custom'>
-                            {user_type === "volunteer" ? "Sign Up" : "+Impact"}  {/* Right-aligned button */}
+                        }} className='button-custom' disabled={isSignedUp}>
+                            {user_type === "volunteer" ? (isSignedUp ? "✅" : "Sign Up") : "+Impact"}  {/* Right-aligned button */}
                         </Button>
                     </div>
                 </Card.Body>

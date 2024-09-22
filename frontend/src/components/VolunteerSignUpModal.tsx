@@ -9,9 +9,9 @@ export const VolunteerSignUpModal: React.FC<VolunteerSignUpModalProps> = ({handl
     return (
         <Modal.Header closeButton>
             <Modal.Title>Volunteer</Modal.Title>
-            <Modal.Body>Click the Okay button to complete signing up</Modal.Body>
+            <Modal.Body>Click the Confirm button to complete signing up</Modal.Body>
             <Modal.Footer>
-                <Button variant="success" onClick={handleVolunteerSignUp}>Okay</Button>
+                <Button variant="success" onClick={handleVolunteerSignUp}>Confirm!</Button>
             </Modal.Footer>
         </Modal.Header>
     )

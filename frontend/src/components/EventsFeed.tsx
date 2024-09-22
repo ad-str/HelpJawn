@@ -34,6 +34,7 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
     const show = () => setShowModal(true);
     const hide = () => setShowModal(false);
     const [selectedEvent, setSelectedEvent] = useState<number>();
+    const [signedUpEvents, setSignedUpEvents] = useState<number[]>([]);
 
     useEffect(() => {
         fetch(`${API_URL}/events/`)
@@ -45,6 +46,14 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
                     image: `/images/event${index + 1}.jpg`  // Assign a local image path
                 }));
                 setEvents(eventsWithImages);
+            })
+            .catch(error => console.log(error));
+
+        // Fetch signed-up events for the user
+        fetch(`${API_URL}/registered-events/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                setSignedUpEvents(data.map((event: Event) => event.id)); // Assuming the response contains the signed-up events
             })
             .catch(error => console.log(error));
     }, []);
@@ -64,6 +73,7 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
             })
             .then(response => {
                 if (response.ok) {
+                    setSignedUpEvents((prev) => [...prev, selectedEvent!]);
                     console.log("Response is okay");
                     hide();
                 } else {
@@ -106,14 +116,14 @@ export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
                 <Row className="justify-content-start">
                     {events.map((event, index) => (
                         <Col key={index} xs={12} sm={12} md={6} lg={4} className="mb-4">
-                            <EventCard title={event.name} description={event.description} date={event.date} start_time={event.start_time} end_time={event.end_time} location={event.location} user_type={user_type} show={show} setSelectedEvent={setEvent} id={event.id} image={event.image}/>
+                            <EventCard title={event.name} description={event.description} date={event.date} start_time={event.start_time} end_time={event.end_time} location={event.location} user_type={user_type} show={show} setSelectedEvent={setEvent} id={event.id} image={event.image} isSignedUp={signedUpEvents.includes(event.id)}/>
                         </Col>
                     ))}
                 </Row>
             </Container>
             <Modal show={showModal} onHide={hide}>
                     {user_type === "volunteer" && <VolunteerSignUpModal handleVolunteerSignUp={handleSignUpVolunteer} />}
-                    {user_type === "client" && <GiveThanksModal handleGiveThanks={handleSayThanks} />}
+                    {user_type !== "volunteer" && <GiveThanksModal handleGiveThanks={handleSayThanks} />}
             </Modal>
         </div>
     );
