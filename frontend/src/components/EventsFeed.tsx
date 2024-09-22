@@ -3,10 +3,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { EventCard } from './EventCard';
 import { useState, useEffect } from 'react';
-import Modal from 'react-bootstrap/Modal';
+
 import { VolunteerSignUpModal } from './VolunteerSignUpModal';
 import { GiveThanksModal } from './GiveThanksModal';
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+import { Card, Button, Modal } from 'react-bootstrap';
 
 interface Event {
     id: number;
@@ -16,12 +17,14 @@ interface Event {
     start_time: string;
     end_time: string;
     location: string;
-    image: string;  // Add this field for the image path
+    image: string;  
+    
 }
 
 interface EventsFeedProps {
     user_type: string;
     userId: number
+    
 }
 
 export const EventsFeed: React.FC<EventsFeedProps> = ({user_type, userId}) => {
