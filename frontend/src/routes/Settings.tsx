@@ -1,18 +1,128 @@
-import React from "react"
-import { User } from "../App"
+import React, { useState } from "react";
+import { User } from "../App";
+import { Form, Button } from "react-bootstrap";
 
 interface SettingsProps {
     user: User;
-    type: string;
+    user_type: string; // Keep this as is
+    updateProfile?: (profileData: { username: string; firstName: string; lastName: string; location?: string; bio?: string }) => void;
 }
 
-export const Settings: React.FC<SettingsProps> = ({user, type}) => {
+export const Settings: React.FC<SettingsProps> = ({ user, user_type, updateProfile }) => {
+    const [username, setUsername] = useState(user.username);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [location, setLocation] = useState("");
+    const [bio, setBio] = useState("");
+
+    const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
+    };
+
+    const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFirstName(e.target.value);
+    };
+
+    const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLastName(e.target.value);
+    };
+
+    const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setLocation(e.target.value);
+    };
+
+    const handleBioChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setBio(e.target.value);
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (user_type === "volunteer" && updateProfile) {
+            updateProfile({
+                username,
+                firstName,
+                lastName,
+                location,
+                bio,
+            });
+        } else {
+            console.log("Profile update options are only available for volunteers.");
+        }
+    };
+
     return (
         <div>
             <h1>Settings</h1>
             <p>Username: {user.username}</p>
             <p>Email: {user.email}</p>
-            <p>Account Type: {type}</p>
+            <p>Account Type: {user_type}</p>
+
+            {user_type === "volunteer" ? (
+                <Form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Form.Group controlId="formBasicUsername" style={{ width: '300px', textAlign: 'center' }}>
+                        <Form.Label>Update Username</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter new username"
+                            value={username}
+                            onChange={handleUsernameChange}
+                            style={{ width: '100%' }} 
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicFirstName" style={{ width: '300px', textAlign: 'center' }}>
+                        <Form.Label>Update First Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your first name"
+                            value={firstName}
+                            onChange={handleFirstNameChange}
+                            style={{ width: '100%' }} 
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicLastName" style={{ width: '300px', textAlign: 'center' }}>
+                        <Form.Label>Update Last Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your last name"
+                            value={lastName}
+                            onChange={handleLastNameChange}
+                            style={{ width: '100%' }} 
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicLocation" style={{ width: '300px', textAlign: 'center' }}>
+                        <Form.Label>Update Location</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter your location"
+                            value={location}
+                            onChange={handleLocationChange}
+                            style={{ width: '100%' }} 
+                        />
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicBio" style={{ width: '300px', textAlign: 'center' }}>
+                        <Form.Label>Update Bio</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Tell us about yourself"
+                            value={bio}
+                            onChange={handleBioChange}
+                            style={{ width: '100%' }} 
+                        />
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" style={{ marginTop: '20px' }}>
+                        Save Changes
+                    </Button>
+                </Form>
+            ) : (
+                <p>Profile update options are not available for your account type.</p>
+            )}
         </div>
-    )
-}
+    );
+};
