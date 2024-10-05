@@ -13,25 +13,28 @@ At HelpJawn, we provide a way for volunteers to discover meaningful opportunitie
     <img src="/frontend/public/images/homepage.jpg" alt="Home Page" title="Home Page">
 </div>
 
+<br><br>
 Organizations can create accounts and post new events and users can update their profiles!
-
-<div style="display: flex; justify-content: center; gap: 10px;">
+<div style="display: flex; justify-content: center; gap: 500px;">
     <img src="/frontend/public/images/organizerevents.jpg" alt="Events" title="Event" style="width: 675px;">
-    <img src="/frontend/public/images/profile.jpg" alt="User Profile" title="User Profile" style="width: 285px;">
+    <img src="/frontend/public/images/profile.jpg" alt="User Profile" title="User Profile" style="width: 283px;">
 </div>
 
-
+<br><br>
+<br><br>
 We also provide a fun and heartfelt way for individuals to thank our volunteers for their amazing service.
 
-
-| ![More Info]( /frontend/public/images/moreinfo.jpg "More info") | ![Impact]( /frontend/public/images/impact.jpg "Impact") |
-|:---:|:---:|
-
-
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="/frontend/public/images/moreinfo.jpg" alt="More Info" title="More info" style="width: 400px; height: auto;">
+</div>
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="/frontend/public/images/impact.jpg" alt="Impact" title="Impact" style="width: 400px; height: auto;">
+</div>
+<br><br>
 Get Started Today!
 Vist our website and discover how you can be a part of our community-driven movement. Together, let's build a better world, one event at a time.
-
-
+<br><br>
+<br><br>
 
 # Local Installation for project
 To install Python (version >= 3.8) packages:
