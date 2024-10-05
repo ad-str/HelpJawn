@@ -11,20 +11,29 @@ HelpJawn was founded on the belief that when we come together, we can truly make
 At HelpJawn, we provide a way for volunteers to discover meaningful opportunities to contribute their time and skills. Whether you're passionate about education, environmental conservation, community health, or beyond, there's a place for you to make a difference here. 
 <div style="display: flex; justify-content: center;">
     <img src="/frontend/public/images/homepage.jpg" alt="Home Page" title="Home Page">
-    <img src="/frontend/public/images/flower.jpg" alt="Second Flower" title="Second Flower" style="width: 300px; margin: 10px;">
 </div>
+
+Organizations can create accounts and post new events and users can update their profiles!
+
+<div style="display: flex; justify-content: center; gap: 10px;">
+    <img src="/frontend/public/images/organizerevents.jpg" alt="Events" title="Event" style="width: 675px;">
+    <img src="/frontend/public/images/profile.jpg" alt="User Profile" title="User Profile" style="width: 285px;">
+</div>
+
+
 We also provide a fun and heartfelt way for individuals to thank our volunteers for their amazing service.
 
-Organizations can also create accounts and post new events!
-| ![First Flower]( /frontend/public/images/flower.jpg "First Flower") | ![Second Flower]( /frontend/public/images/flower.jpg "Second Flower") |
+
+| ![More Info]( /frontend/public/images/moreinfo.jpg "More info") | ![Impact]( /frontend/public/images/impact.jpg "Impact") |
 |:---:|:---:|
 
 
-Get Started: Visit HelpJawn.com today to discover how you can be a part of our community-driven movement. Together, let's build a better world, one event at a time.
+Get Started Today!
+Vist our website and discover how you can be a part of our community-driven movement. Together, let's build a better world, one event at a time.
 
 
 
-# Installation
+# Local Installation for project
 To install Python (version >= 3.8) packages:
 ```
 cd backend
@@ -53,4 +62,16 @@ Flush all data and populate database:
 cd backend
 python3 manage.py flush
 python3 manage.py populate_test_data
+```
+
+Run Server
+```
+cd backend
+python3 manage.py runserver
+```
+
+Run React+Vite Frontend
+```
+cd frontend
+npm run dev
 ```
