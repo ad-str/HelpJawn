@@ -14,7 +14,7 @@ At HelpJawn, we provide a way for volunteers to discover meaningful opportunitie
 </div>
 
 <br><br>
-Organizations can create accounts and post new events and users can update their profiles!
+Organizations can post new events and users can update their profiles!
 <div style="display: flex; justify-content: center; gap: 500px;">
     <img src="/frontend/public/images/organizerevents.jpg" alt="Events" title="Event" style="width: 675px;">
     <img src="/frontend/public/images/profile.jpg" alt="User Profile" title="User Profile" style="width: 283px;">
