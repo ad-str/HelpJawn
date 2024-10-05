@@ -2,8 +2,6 @@
 
 Welcome to **HelpJawn**, a transformative platform dedicated to forging connections between volunteers, organizations, and individuals in need, all with the aim of cultivating a community where each action makes a meaningful impact.
 
-
-
 ### Our Vision: 
 HelpJawn was founded on the belief that when we come together, we can truly make a difference. Our mission is to empower both volunteers and organizations, fostering a collaborative community that addresses societal needs with compassion and purpose.
 
