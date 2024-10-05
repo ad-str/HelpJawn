@@ -21,7 +21,6 @@ Organizations can post new events and users can update their profiles!
 </div>
 
 <br><br>
-<br><br>
 We also provide a fun and heartfelt way for individuals to thank our volunteers for their amazing service.
 
 <div style="display: flex; justify-content: center; gap: 10px;">
@@ -31,11 +30,12 @@ We also provide a fun and heartfelt way for individuals to thank our volunteers 
     <img src="/frontend/public/images/impact.jpg" alt="Impact" title="Impact" style="width: 400px; height: auto;">
 </div>
 <br><br>
+
 Get Started Today!
 Vist our website and discover how you can be a part of our community-driven movement. Together, let's build a better world, one event at a time.
 <br><br>
 <br><br>
-
+<br><br>
 # Local Installation for project
 To install Python (version >= 3.8) packages:
 ```
